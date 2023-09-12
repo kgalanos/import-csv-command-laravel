@@ -1,26 +1,29 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "kgalanos/import-csv-command-laravel",
+    "description": "This is my package import-csv-command-laravel",
     "keywords": [
-        ":vendor_name",
+        "kgalanos",
         "laravel",
-        ":package_slug"
+        "import-csv-command-laravel"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/kgalanos/import-csv-command-laravel",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Kostas Galanos",
+            "email": "kigalanos@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
+        "illuminate/contracts": "^10.0",
+        "league/csv": "^9.0",
         "spatie/laravel-package-tools": "^1.14.0",
-        "illuminate/contracts": "^10.0"
+        "kgalanos/conversion": "^1.0"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.8",
         "nunomaduro/larastan": "^2.0.1",
@@ -35,19 +38,19 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Kgalanos\\ImportCsvCommandLaravel\\": "src/",
+            "Kgalanos\\ImportCsvCommandLaravel\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Kgalanos\\ImportCsvCommandLaravel\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
     "scripts": {
         "post-autoload-dump": "@composer run prepare",
-        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "clear": "@php vendor/bin/testbench package:purge-import-csv-command-laravel --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "build": [
             "@composer run prepare",
@@ -72,10 +75,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Kgalanos\\ImportCsvCommandLaravel\\ImportCsvCommandLaravelServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "ImportCsvCommandLaravel": "Kgalanos\\ImportCsvCommandLaravel\\Facades\\ImportCsvCommandLaravel"
             }
         }
     },

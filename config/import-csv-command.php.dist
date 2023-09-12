@@ -1,0 +1,68 @@
+<?php
+
+// config for Kgalanos/PartnerAragGr
+
+use Kgalanos\PartnerAragGr\Models\anex;
+use Kgalanos\PartnerAragGr\Models\anexusernamelekt;
+use Kgalanos\PartnerAragGr\Models\eisf;
+use Kgalanos\PartnerAragGr\Models\ist;
+use Kgalanos\PartnerAragGr\Models\istusernamelekt;
+use Kgalanos\PartnerAragGr\Models\prakfn;
+use Kgalanos\PartnerAragGr\Models\sym;
+use Kgalanos\PartnerAragGr\Models\symap;
+use Kgalanos\PartnerAragGr\Models\symox;
+use Kgalanos\PartnerAragGr\Models\symprost;
+use Kgalanos\PartnerAragGr\Models\symusernamesymomad;
+use Kgalanos\User\Models\User;
+
+return [
+    'users' => [
+        'model' => User::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'users.csv',
+        'headers' => User::FIILABLE_ARRAY,
+    ],
+
+    'websym' => [
+        'model' => sym::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'websym.txt',
+        'headers' => sym::FILLABLE_ARRAY,
+        'foreigns' => [symusernamesymomad::class],
+    ],
+    'symox' => [
+        'model' => symox::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'webox.txt',
+        'headers' => symox::FILLABLE_ARRAY,
+    ],
+    'symap' => [
+        'model' => symap::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'webap.txt',
+        'headers' => symap::FILLABLE_ARRAY,
+    ],
+    'symprost' => [
+        'model' => symprost::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'webpm.txt',
+        'headers' => symprost::FILLABLE_ARRAY,
+    ],
+    'webprakf' => [
+        'model' => prakfn::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'webprakf.txt',
+        'headers' => prakfn::FILLABLE_ARRAY,
+    ],
+    'webeisf' => [
+        'model' => eisf::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'webeisf.txt',
+        'headers' => eisf::FILLABLE_ARRAY,
+    ],
+    'webanxf' => [
+        'model' => anex::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'webanxf.txt',
+        'headers' => anex::FILLABLE_ARRAY,
+        'foreigns' => [anexusernamelekt::class],
+    ],
+    'webist' => [
+        'model' => ist::class,
+        'csv' => 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.'webistf.txt',
+        'headers' => ist::FILLABLE_ARRAY,
+        'foreigns' => [istusernamelekt::class],
+    ],
+];
