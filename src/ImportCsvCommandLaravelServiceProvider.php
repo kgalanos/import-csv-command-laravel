@@ -2,9 +2,9 @@
 
 namespace Kgalanos\ImportCsvCommandLaravel;
 
+use Kgalanos\ImportCsvCommandLaravel\Commands\ImportCsvCommandLaravelCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Kgalanos\ImportCsvCommandLaravel\Commands\ImportCsvCommandLaravelCommand;
 
 class ImportCsvCommandLaravelServiceProvider extends PackageServiceProvider
 {

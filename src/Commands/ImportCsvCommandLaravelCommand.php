@@ -86,19 +86,19 @@ class ImportCsvCommandLaravelCommand extends Command
             $record = array_combine($headers, $record);
             //            dd($record);
             $record['phone'] = null;
-//                        dd($record);
+            //                        dd($record);
 
             /** @var ImportCsvCommandLaravelInterface|Model $foreignModel */
             foreach ($foreignsModels as $foreignModel) {
-                /** @var array  $foreignData */
-                $foreignData =[];
+                /** @var array $foreignData */
+                $foreignData = [];
                 foreach ($foreignModel::getCsvHeaders() as $foreignElement) {
-//                    dd($record[$foreignElement]);
+                    //                    dd($record[$foreignElement]);
                     $foreignData[$foreignElement] = $record[$foreignElement];
                 }
                 $foreignModel::updateOrCreate($foreignData);
             }
-//            dd($record);
+            //            dd($record);
             try {
                 $data_rec = $modelEloquent::create($record);
                 //                $user = User::findOrFail($record['KODPRA'],'username')->get()->first();
@@ -129,9 +129,10 @@ class ImportCsvCommandLaravelCommand extends Command
         if (is_null(config($this->key)[$model])) {
             throw new \Exception("the $model is not defined");
         }
-        if(! in_array(ImportCsvCommandLaravelInterface::class,class_implements(config($this->key)[$model]['model'])))
-            throw new \Exception("no interface ".ImportCsvCommandLaravelInterface::class." implements");
-//        dd(config($this->key)[$model]);
+        if (! in_array(ImportCsvCommandLaravelInterface::class, class_implements(config($this->key)[$model]['model']))) {
+            throw new \Exception('no interface '.ImportCsvCommandLaravelInterface::class.' implements');
+        }
+        //        dd(config($this->key)[$model]);
         $csv = config($this->key)[$model]['csv'];
         if (! file_exists($csv)) {
             throw new \Exception("the $csv file does not exist");
