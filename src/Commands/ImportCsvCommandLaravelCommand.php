@@ -3,6 +3,7 @@
 namespace Kgalanos\ImportCsvCommandLaravel\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use kgalanos\conversion\File\ToCodepage as ConvertFileClass;
@@ -85,15 +86,19 @@ class ImportCsvCommandLaravelCommand extends Command
             $record = array_combine($headers, $record);
             //            dd($record);
             $record['phone'] = null;
-            //            dd($record);
+//                        dd($record);
 
+            /** @var ImportCsvCommandLaravelInterface|Model $foreignModel */
             foreach ($foreignsModels as $foreignModel) {
-                foreach ($foreignModel::FILLABLE_ARRAY as $foreignElement) {
+                /** @var array  $foreignData */
+                $foreignData =[];
+                foreach ($foreignModel::getCsvHeaders() as $foreignElement) {
+//                    dd($record[$foreignElement]);
                     $foreignData[$foreignElement] = $record[$foreignElement];
                 }
                 $foreignModel::updateOrCreate($foreignData);
             }
-
+//            dd($record);
             try {
                 $data_rec = $modelEloquent::create($record);
                 //                $user = User::findOrFail($record['KODPRA'],'username')->get()->first();
