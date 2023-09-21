@@ -85,10 +85,8 @@ class ImportCsvCommandLaravelCommand extends Command
          * is simple csv(false) import or adjacency list(true)
          * always false
          */
-//        $this->listed = $this->option('listed');
-        /**
-         *
-         */
+        //        $this->listed = $this->option('listed');
+
         $problem_rec = 0;
         $folderToSave = 'data'.DIRECTORY_SEPARATOR.'csv'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR;
         $stream_errors = fopen($folderToSave.$model.'.err.txt', 'w');
@@ -110,20 +108,22 @@ class ImportCsvCommandLaravelCommand extends Command
                 $foreignModel::updateOrCreate($foreignData);
             }
 
+
 //            dd($record);
             if($this->listed){ //always false
                 /*
                 try{
+            //            dd($record);
                     $parent = $modelEloquent::firstOrCreate([
-                        'parent_id'=>null,
-                        'username'=>$record['parent'],
+                        'parent_id' => null,
+                        'username' => $record['parent'],
                     ]);
-                    $record['parent_id']= $parent->id;
+                    $record['parent_id'] = $parent->id;
                     $data_rec = $modelEloquent::create($record);
-                }catch (QueryException $queryException) {
+                } catch (QueryException $queryException) {
                     $problem_rec++;
                     fwrite($stream_errors, $queryException->getMessage());
-                    fwrite($stream_errors, "$problem_rec -- " . print_r($record, true));
+                    fwrite($stream_errors, "$problem_rec -- ".print_r($record, true));
 
                 }
                 */
@@ -135,7 +135,7 @@ class ImportCsvCommandLaravelCommand extends Command
                 } catch (QueryException $queryException) {
                     $problem_rec++;
                     fwrite($stream_errors, $queryException->getMessage());
-                    fwrite($stream_errors, "$problem_rec -- " . print_r($record, true));
+                    fwrite($stream_errors, "$problem_rec -- ".print_r($record, true));
                 }
             }
 

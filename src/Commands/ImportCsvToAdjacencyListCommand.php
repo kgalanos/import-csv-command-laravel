@@ -21,9 +21,11 @@ class ImportCsvToAdjacencyListCommand extends Command
     protected $description = 'Import CSV Adjacency-List data to a model';
 
     protected $key = 'import-csv-list-command';
-    public function handle():int
+
+    public function handle(): int
     {
-        echo "import list";
+        echo 'import list';
+
         return 0;
     }
 }

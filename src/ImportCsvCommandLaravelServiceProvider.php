@@ -22,7 +22,7 @@ class ImportCsvCommandLaravelServiceProvider extends PackageServiceProvider
 //            ->hasMigration('create_import-csv-command-laravel_table')
             ->hasCommands([
                 ImportCsvCommandLaravelCommand::class,
-//                ImportCsvToAdjacencyListCommand::class,
+                //                ImportCsvToAdjacencyListCommand::class,
             ]);
     }
 }
