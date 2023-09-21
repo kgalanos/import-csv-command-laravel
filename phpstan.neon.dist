@@ -11,5 +11,4 @@ parameters:
     checkOctaneCompatibility: true
     checkModelProperties: true
     checkMissingIterableValueType: false
-    ignoreErrors:
-        - '#Access to an undefined property [a-zA-Z0-9\\_]::$()#'
+

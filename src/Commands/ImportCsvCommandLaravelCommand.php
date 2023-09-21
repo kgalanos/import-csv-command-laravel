@@ -80,8 +80,9 @@ class ImportCsvCommandLaravelCommand extends Command
         }
         /**
          * is simple csv(false) import or adjacency list(true)
+         * always false
          */
-        $this->listed = $this->option('listed');
+//        $this->listed = $this->option('listed');
         /**
          *
          */
@@ -105,9 +106,9 @@ class ImportCsvCommandLaravelCommand extends Command
                 }
                 $foreignModel::updateOrCreate($foreignData);
             }
-<<<<<<< HEAD
+
 //            dd($record);
-            if($this->listed){
+            if($this->listed){ //always false
                 try{
                     $parent = $modelEloquent::firstOrCreate([
                         'parent_id'=>null,
@@ -131,7 +132,8 @@ class ImportCsvCommandLaravelCommand extends Command
                     fwrite($stream_errors, $queryException->getMessage());
                     fwrite($stream_errors, "$problem_rec -- " . print_r($record, true));
                 }
-=======
+            }
+
             //            dd($record);
             try {
                 $data_rec = $modelEloquent::create($record);
@@ -141,7 +143,7 @@ class ImportCsvCommandLaravelCommand extends Command
                 $problem_rec++;
                 fwrite($stream_errors, $queryException->getMessage());
                 fwrite($stream_errors, "$problem_rec -- ".print_r($record, true));
->>>>>>> 498cf364c7e585b51b78008c444a6ccbf1b51128
+
             }
 
             $bar->advance();
