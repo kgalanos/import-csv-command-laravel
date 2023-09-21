@@ -93,18 +93,19 @@ class ImportCsvCommandLaravelCommand extends Command
             $record = array_combine($headers, $record);
             //            dd($record);
             $record['phone'] = null;
-//                        dd($record);
+            //                        dd($record);
 
             /** @var ImportCsvCommandLaravelInterface|Model $foreignModel */
             foreach ($foreignsModels as $foreignModel) {
-                /** @var array  $foreignData */
-                $foreignData =[];
+                /** @var array $foreignData */
+                $foreignData = [];
                 foreach ($foreignModel::getCsvHeaders() as $foreignElement) {
-//                    dd($record[$foreignElement]);
+                    //                    dd($record[$foreignElement]);
                     $foreignData[$foreignElement] = $record[$foreignElement];
                 }
                 $foreignModel::updateOrCreate($foreignData);
             }
+<<<<<<< HEAD
 //            dd($record);
             if($this->listed){
                 try{
@@ -130,6 +131,17 @@ class ImportCsvCommandLaravelCommand extends Command
                     fwrite($stream_errors, $queryException->getMessage());
                     fwrite($stream_errors, "$problem_rec -- " . print_r($record, true));
                 }
+=======
+            //            dd($record);
+            try {
+                $data_rec = $modelEloquent::create($record);
+                //                $user = User::findOrFail($record['KODPRA'],'username')->get()->first();
+                //                $data_rec->user()->associate($user);
+            } catch (QueryException $queryException) {
+                $problem_rec++;
+                fwrite($stream_errors, $queryException->getMessage());
+                fwrite($stream_errors, "$problem_rec -- ".print_r($record, true));
+>>>>>>> 498cf364c7e585b51b78008c444a6ccbf1b51128
             }
 
             $bar->advance();
@@ -152,9 +164,10 @@ class ImportCsvCommandLaravelCommand extends Command
         if (is_null(config($this->key)[$model])) {
             throw new \Exception("the $model is not defined");
         }
-        if(! in_array(ImportCsvCommandLaravelInterface::class,class_implements(config($this->key)[$model]['model'])))
-            throw new \Exception("no interface ".ImportCsvCommandLaravelInterface::class." implements");
-//        dd(config($this->key)[$model]);
+        if (! in_array(ImportCsvCommandLaravelInterface::class, class_implements(config($this->key)[$model]['model']))) {
+            throw new \Exception('no interface '.ImportCsvCommandLaravelInterface::class.' implements');
+        }
+        //        dd(config($this->key)[$model]);
         $csv = config($this->key)[$model]['csv'];
         if (! file_exists($csv)) {
             throw new \Exception("the $csv file does not exist");

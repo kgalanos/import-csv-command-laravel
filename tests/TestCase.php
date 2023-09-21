@@ -3,8 +3,8 @@
 namespace Kgalanos\ImportCsvCommandLaravel\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Kgalanos\ImportCsvCommandLaravel\ImportCsvCommandLaravelServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

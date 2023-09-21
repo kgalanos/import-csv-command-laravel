@@ -2,7 +2,7 @@
 
 namespace Kgalanos\ImportCsvCommandLaravel;
 
-Interface ImportCsvCommandLaravelInterface
+interface ImportCsvCommandLaravelInterface
 {
-    public static function getCsvHeaders() :array;
+    public static function getCsvHeaders(): array;
 }
