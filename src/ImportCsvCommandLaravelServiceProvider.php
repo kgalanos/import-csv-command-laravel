@@ -2,6 +2,7 @@
 
 namespace Kgalanos\ImportCsvCommandLaravel;
 
+use Kgalanos\ImportCsvCommandLaravel\Commands\ImportCsvToAdjacencyListCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Kgalanos\ImportCsvCommandLaravel\Commands\ImportCsvCommandLaravelCommand;
@@ -20,6 +21,9 @@ class ImportCsvCommandLaravelServiceProvider extends PackageServiceProvider
             ->hasConfigFile('import-csv-command')
 //            ->hasViews()
 //            ->hasMigration('create_import-csv-command-laravel_table')
-            ->hasCommand(ImportCsvCommandLaravelCommand::class);
+            ->hasCommands([
+                ImportCsvCommandLaravelCommand::class,
+                ImportCsvToAdjacencyListCommand::class,
+            ]);
     }
 }

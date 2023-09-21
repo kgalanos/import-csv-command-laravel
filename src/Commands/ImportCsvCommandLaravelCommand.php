@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Kgalanos\AragPrakfn\Models\prakfn;
 use kgalanos\conversion\File\ToCodepage as ConvertFileClass;
 use Kgalanos\ImportCsvCommandLaravel\ImportCsvCommandLaravelInterface;
 use League\Csv\Reader;
@@ -17,7 +18,7 @@ class ImportCsvCommandLaravelCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'import:csv {--truncated} {--model=}';
+    protected $signature = 'import:csv {--truncated} {--model=} {--listed}';
 
     /**
      * The console command description.
@@ -27,6 +28,8 @@ class ImportCsvCommandLaravelCommand extends Command
     protected $description = 'Import CSV data to a model';
 
     protected $key = 'import-csv-command';
+
+    protected $listed = false;
 
     public function handle(): int
     {
@@ -75,7 +78,11 @@ class ImportCsvCommandLaravelCommand extends Command
             $modelEloquent::truncate();
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
-        /*
+        /**
+         * is simple csv(false) import or adjacency list(true)
+         */
+        $this->listed = $this->option('listed');
+        /**
          *
          */
         $problem_rec = 0;
@@ -99,14 +106,30 @@ class ImportCsvCommandLaravelCommand extends Command
                 $foreignModel::updateOrCreate($foreignData);
             }
 //            dd($record);
-            try {
-                $data_rec = $modelEloquent::create($record);
-                //                $user = User::findOrFail($record['KODPRA'],'username')->get()->first();
-                //                $data_rec->user()->associate($user);
-            } catch (QueryException $queryException) {
-                $problem_rec++;
-                fwrite($stream_errors, $queryException->getMessage());
-                fwrite($stream_errors, "$problem_rec -- ".print_r($record, true));
+            if($this->listed){
+                try{
+                    $parent = $modelEloquent::firstOrCreate([
+                        'parent_id'=>null,
+                        'username'=>$record['parent'],
+                    ]);
+                    $record['parent_id']= $parent->id;
+                    $data_rec = $modelEloquent::create($record);
+                }catch (QueryException $queryException) {
+                    $problem_rec++;
+                    fwrite($stream_errors, $queryException->getMessage());
+                    fwrite($stream_errors, "$problem_rec -- " . print_r($record, true));
+
+                }
+            }else {
+                try {
+                    $data_rec = $modelEloquent::create($record);
+                    //                $user = User::findOrFail($record['KODPRA'],'username')->get()->first();
+                    //                $data_rec->user()->associate($user);
+                } catch (QueryException $queryException) {
+                    $problem_rec++;
+                    fwrite($stream_errors, $queryException->getMessage());
+                    fwrite($stream_errors, "$problem_rec -- " . print_r($record, true));
+                }
             }
 
             $bar->advance();
