@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Kgalanos\AragPrakfn\Models\prakfn;
 use kgalanos\conversion\File\ToCodepage as ConvertFileClass;
 use Kgalanos\ImportCsvCommandLaravel\ImportCsvCommandLaravelInterface;
@@ -74,9 +75,11 @@ class ImportCsvCommandLaravelCommand extends Command
             $foreignsModels = [];
         }
         if ($this->option('truncated')) {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Schema::disableForeignKeyConstraints();
+//            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             $modelEloquent::truncate();
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            Schema::enableForeignKeyConstraints();
+//            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
         /**
          * is simple csv(false) import or adjacency list(true)
@@ -109,6 +112,7 @@ class ImportCsvCommandLaravelCommand extends Command
 
 //            dd($record);
             if($this->listed){ //always false
+                /*
                 try{
                     $parent = $modelEloquent::firstOrCreate([
                         'parent_id'=>null,
@@ -122,6 +126,7 @@ class ImportCsvCommandLaravelCommand extends Command
                     fwrite($stream_errors, "$problem_rec -- " . print_r($record, true));
 
                 }
+                */
             }else {
                 try {
                     $data_rec = $modelEloquent::create($record);
@@ -135,17 +140,6 @@ class ImportCsvCommandLaravelCommand extends Command
             }
 
             //            dd($record);
-            try {
-                $data_rec = $modelEloquent::create($record);
-                //                $user = User::findOrFail($record['KODPRA'],'username')->get()->first();
-                //                $data_rec->user()->associate($user);
-            } catch (QueryException $queryException) {
-                $problem_rec++;
-                fwrite($stream_errors, $queryException->getMessage());
-                fwrite($stream_errors, "$problem_rec -- ".print_r($record, true));
-
-            }
-
             $bar->advance();
         }
         fclose($stream_errors);
