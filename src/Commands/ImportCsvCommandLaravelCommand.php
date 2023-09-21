@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Kgalanos\AragPrakfn\Models\prakfn;
 use kgalanos\conversion\File\ToCodepage as ConvertFileClass;
 use Kgalanos\ImportCsvCommandLaravel\ImportCsvCommandLaravelInterface;
 use League\Csv\Reader;
@@ -76,10 +75,10 @@ class ImportCsvCommandLaravelCommand extends Command
         }
         if ($this->option('truncated')) {
             Schema::disableForeignKeyConstraints();
-//            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            //            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             $modelEloquent::truncate();
             Schema::enableForeignKeyConstraints();
-//            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            //            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
         /**
          * is simple csv(false) import or adjacency list(true)
@@ -108,9 +107,8 @@ class ImportCsvCommandLaravelCommand extends Command
                 $foreignModel::updateOrCreate($foreignData);
             }
 
-
-//            dd($record);
-            if($this->listed){ //always false
+            //            dd($record);
+            if ($this->listed) { //always false
                 /*
                 try{
             //            dd($record);
@@ -127,7 +125,7 @@ class ImportCsvCommandLaravelCommand extends Command
 
                 }
                 */
-            }else {
+            } else {
                 try {
                     $data_rec = $modelEloquent::create($record);
                     //                $user = User::findOrFail($record['KODPRA'],'username')->get()->first();
